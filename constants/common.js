@@ -1,4 +1,4 @@
-export  const homeData = [
+export const homeData = [
   {
     id: "1",
     name: "Dr. Areeb",
@@ -8,6 +8,7 @@ export  const homeData = [
     reviews: 130,
     experience: 2,
     satisfaction: 99,
+    phoneNo: "0300-1234567",
     tags: ["PRP", "Acne", "Hair Loss"],
     profileImage: require("../assets/images/doc1.jpg"),
     canVideoCall: true,
@@ -26,6 +27,14 @@ export  const homeData = [
         fromDate: "Nov 28",
       },
     ],
+    reviewData: {
+      waitTime: 10,
+      averageTimeToPatient: 15,
+      patientSatisfaction: 4.7,
+      diagnosis: 4.8,
+      staffBehaviour: 4.9,
+      clinicEnv: 4.6,
+    },
   },
 
   {
@@ -36,6 +45,7 @@ export  const homeData = [
     degree: "MS Clinical Psychology",
     reviews: 98,
     experience: 4,
+    phoneNo: "0300-1234567",
     satisfaction: 96,
     tags: ["Anxiety", "Depression", "Therapy"],
     profileImage: require("../assets/images/doc1.jpg"),
@@ -55,6 +65,14 @@ export  const homeData = [
         fromDate: "Nov 30",
       },
     ],
+    reviewData: {
+      waitTime: 6,
+      averageTimeToPatient: 12,
+      patientSatisfaction: 4.9,
+      diagnosis: 4.7,
+      staffBehaviour: 5,
+      clinicEnv: 4.8,
+    },
   },
 
   {
@@ -65,6 +83,7 @@ export  const homeData = [
     degree: "MBBS, FCPS (Cardiology)",
     reviews: 215,
     experience: 7,
+    phoneNo: "0300-1234567",
     satisfaction: 97,
     tags: ["Heart Checkup", "ECG", "Chest Pain"],
     profileImage: require("../assets/images/doc1.jpg"),
@@ -77,6 +96,14 @@ export  const homeData = [
         availableNow: true,
       },
     ],
+    reviewData: {
+      waitTime: 12,
+      averageTimeToPatient: 18,
+      patientSatisfaction: 4.5,
+      diagnosis: 4.6,
+      staffBehaviour: 4.4,
+      clinicEnv: 4.7,
+    },
   },
 
   {
@@ -87,6 +114,7 @@ export  const homeData = [
     degree: "MBBS, FCPS (Gynecology)",
     reviews: 185,
     experience: 6,
+    phoneNo: "0300-1234567",
     satisfaction: 98,
     tags: ["Pregnancy", "Ultrasound", "Women Health"],
     profileImage: require("../assets/images/doc1.jpg"),
@@ -107,6 +135,14 @@ export  const homeData = [
         fromDate: "Dec 2",
       },
     ],
+    reviewData: {
+      waitTime: 9,
+      averageTimeToPatient: 10,
+      patientSatisfaction: 4.8,
+      diagnosis: 4.7,
+      staffBehaviour: 4.9,
+      clinicEnv: 4.6,
+    },
   },
 
   {
@@ -117,6 +153,7 @@ export  const homeData = [
     degree: "MBBS, MS Orthopedics",
     reviews: 160,
     experience: 5,
+    phoneNo: "0300-1234567",
     satisfaction: 95,
     tags: ["Back Pain", "Joint Pain", "Fractures"],
     profileImage: require("../assets/images/doc1.jpg"),
@@ -129,6 +166,14 @@ export  const homeData = [
         availableNow: true,
       },
     ],
+    reviewData: {
+      waitTime: 14,
+      averageTimeToPatient: 20,
+      patientSatisfaction: 4.3,
+      diagnosis: 4.4,
+      staffBehaviour: 4.2,
+      clinicEnv: 4.1,
+    },
   },
 
   {
@@ -139,6 +184,7 @@ export  const homeData = [
     degree: "MS Human Nutrition",
     reviews: 142,
     experience: 3,
+    phoneNo: "0300-1234567",
     satisfaction: 94,
     tags: ["Diet Plan", "Weight Loss", "Meal Prep"],
     profileImage: require("../assets/images/doc1.jpg"),
@@ -158,5 +204,13 @@ export  const homeData = [
         fromDate: "Dec 1",
       },
     ],
+    reviewData: {
+      waitTime: 5,
+      averageTimeToPatient: 9,
+      patientSatisfaction: 4.6,
+      diagnosis: 4.5,
+      staffBehaviour: 1,
+      clinicEnv: 4.8,
+    },
   },
 ];

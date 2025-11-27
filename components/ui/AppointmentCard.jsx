@@ -2,9 +2,12 @@ import { Zap } from "lucide-react-native";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Label from "./Label";
 
-const AppointmentCard = ({ data, onPress = () => {} }) => {
+const AppointmentCard = ({ data, onPress = () => {}, selected = false }) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.container, selected ? styles.selected : null]}
+      onPress={onPress}
+    >
       <View style={styles.row}>
         <Text style={styles.title}>{data?.type}</Text>
         <Label
@@ -33,7 +36,11 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     borderRadius: 10,
     marginRight: 10,
-    width: 300,
+    flex: 1
+  },
+  selected: {
+    borderColor: "#4ca585",
+    borderWidth: 2,
   },
   title: {
     color: "#00507a",

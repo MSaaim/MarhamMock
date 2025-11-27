@@ -38,7 +38,7 @@ const index = () => {
                     onPress={() =>
                       router.push({
                         pathname: "/DoctorProfile",
-                        params: { doctor: doctor },
+                        params: { doctor: JSON.stringify(doctor) },
                       })
                     }
                     onAppointmentPress={(appointment) =>
