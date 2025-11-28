@@ -73,8 +73,10 @@ Join our community of developers creating universal apps.
 
  Expected
  - Works on both android and iOS
- - Failed to implement the tailwind, setup problems, fallback to traditional styling
  - used expo-router for navigation between screen and back
  - provided ease of use for user to navigate easily back to the original screen
+
+ Blocker
+ - Failed to implement the tailwind, setup problems, fallback to traditional styling
 
  
