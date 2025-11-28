@@ -1,13 +1,14 @@
 import { Star } from "lucide-react-native";
 import {
-    FlatList,
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import AppointmentCard from "../AppointmentCard";
+import AvalabilityBadge from "../AvalabilityBadge";
 import Label from "../Label";
 
 const HomeCard = ({ doctor = null, onPress, onAppointmentPress }) => {
@@ -16,17 +17,25 @@ const HomeCard = ({ doctor = null, onPress, onAppointmentPress }) => {
       <View style={styles.topContainer}>
         <View style={styles.personalContainer}>
           <Image source={doctor.profileImage} style={styles.profileImage} />
+
           <View style={styles.personalDetails}>
-            <Text style={[styles.text, styles.bold]}>{doctor?.name}</Text>
-            <Text
-              style={[
-                styles.text,
-                styles.bold,
-                { color: "#4ca585", fontSize: 12, marginVertical: 2 },
-              ]}
-            >
-              {doctor?.verified ? "PMDC Verified" : null}
-            </Text>
+            <View style={styles.nameRow}>
+              <Text style={[styles.text, styles.bold]}>{doctor?.name}</Text>
+              <AvalabilityBadge isOnline={doctor?.isOnline} />
+            </View>
+
+            {doctor?.verified && (
+              <Text
+                style={[
+                  styles.text,
+                  styles.bold,
+                  { color: "#4ca585", fontSize: 12, marginVertical: 2 },
+                ]}
+              >
+                PMDC Verified
+              </Text>
+            )}
+
             <Text style={[styles.text, { fontSize: 12, marginBottom: 2 }]}>
               {doctor?.specialization}
             </Text>
@@ -35,7 +44,6 @@ const HomeCard = ({ doctor = null, onPress, onAppointmentPress }) => {
             </Text>
           </View>
         </View>
-
         <View style={styles.ratingSection}>
           <View style={styles.rating}>
             <Text style={[styles.text, styles.bold, { color: "#ed8a19" }]}>
@@ -104,6 +112,13 @@ const styles = StyleSheet.create({
   personalContainer: {
     flexDirection: "row",
   },
+  nameRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: 'space-between',
+    gap: 6,
+    flexWrap: "wrap",
+  },
   topContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -150,5 +165,20 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 8,
     paddingRight: 20,
+  },
+  availability: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 6,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 8,
+    marginRight: 6,
+  },
+  availabilityText: {
+    fontSize: 12,
+    color: "#666",
   },
 });

@@ -1,25 +1,31 @@
+import { addAppointment } from "@/store/appointmentsSlice";
 import { useLocalSearchParams } from "expo-router";
 import { Share } from "lucide-react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
+import { useDispatch } from "react-redux";
 import AppointmentCard from "../../components/ui/AppointmentCard";
+import AvalabilityBadge from "../../components/ui/AvalabilityBadge";
 import CustomButton from "../../components/ui/CustomButton";
 import CustomCheckbox from "../../components/ui/CustomCheckBox";
 import CustomHeader from "../../components/ui/CustomHeader";
 import CustomTextInput from "../../components/ui/CustomTextInput";
-import ReviewSection from "../../components/ui/Dermatologists/ReviewSection";
+import DoctorStats from "../../components/ui/Dermatologists/DoctorStats";
+import ReviewCard from "../../components/ui/Dermatologists/ReviewCard";
 import PickerInput from "../../components/ui/PickerInput";
 import SelectionModal from "../../components/ui/selectionModal";
 
 const DoctorProfile = () => {
   const { doctor } = useLocalSearchParams();
   const data = doctor ? JSON.parse(doctor) : null;
-  
+
   const [state, setState] = useState({
     selectedAppointment: null,
     patientName: "",
     patientPhone: "",
+    patientNotes: "",
     amOutside: false,
     selectedAppointmentIndex: null,
     isTimeModalVisible: false,
@@ -37,6 +43,20 @@ const DoctorProfile = () => {
 
   const times = ["10:00 AM", "10:15 AM", "10:30 AM", "11:00 AM", "11:30 AM"];
 
+  useEffect(() => {
+    if (
+      data?.quickAppointments &&
+      data.quickAppointments.length > 0 &&
+      !state.selectedAppointment
+    ) {
+      setState((prev) => ({
+        ...prev,
+        selectedAppointment: data.quickAppointments[0],
+        selectedAppointmentIndex: 0,
+      }));
+    }
+  }, [data]);
+
   const handleDateSelect = (selectedValue) => {
     console.log("first");
     setState((prev) => ({
@@ -52,6 +72,61 @@ const DoctorProfile = () => {
       selectedTime: selectedValue,
       isTimeModalVisible: false,
     }));
+  };
+
+  const dispatch = useDispatch();
+
+  const handleBookAppointment = () => {
+    const e = {};
+    if (!state.patientName || !state.patientName.trim())
+      e.name = "Name is required";
+    if (!state.patientPhone || !state.patientPhone.trim())
+      e.phone = "Phone is required";
+    if (Object.keys(e).length) {
+      const messages = Object.values(e).join(". ");
+      Toast.show({ type: "error", text1: "Validation error", text2: messages });
+      return;
+    }
+
+    const appt = state.selectedAppointment || {};
+    const booking = {
+      type: appt.type || "Video Consultation",
+      price: appt.price || 0,
+      availableNow: appt.availableNow || false,
+      fastConfirm: appt.fastConfirm || false,
+      fromDate: state.selectedDate || appt.fromDate || null,
+      bookedAt: new Date().toISOString(),
+      details: {
+        name: state.patientName,
+        phone: state.patientPhone,
+        notes: state.patientNotes || "",
+        amOutside: !!state.amOutside,
+      },
+    };
+
+    try {
+      dispatch(addAppointment(booking));
+      Toast.show({
+        type: "success",
+        text1: "Booked",
+        text2: "Appointment booked successfully",
+      });
+      setState((prev) => ({
+        ...prev,
+        patientName: "",
+        patientPhone: "",
+        patientNotes: "",
+        amOutside: false,
+        selectedDate: "",
+        selectedTime: "",
+      }));
+    } catch (err) {
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Could not book appointment",
+      });
+    }
   };
 
   return (
@@ -80,20 +155,28 @@ const DoctorProfile = () => {
                 style={[
                   styles.text,
                   styles.bold,
-                  { marginTop: 10, fontSize: 18 },
+                  { marginTop: 10, fontSize: 18, marginBottom: 10 },
                 ]}
               >
                 {data?.name}
               </Text>
-              <Text
-                style={[
-                  styles.text,
-                  styles.bold,
-                  { marginTop: 10, color: "#4ca585" },
-                ]}
-              >
-                {data?.verified ? "PMDC Verified" : null}
-              </Text>
+
+              <AvalabilityBadge
+                isOnline={data.isOnline}
+                size={12}
+                fontSize={14}
+              />
+              {data?.verified && (
+                <Text
+                  style={[
+                    styles.text,
+                    styles.bold,
+                    { marginTop: 10, color: "#4ca585" },
+                  ]}
+                >
+                  {data?.verified ? "PMDC Verified" : null}
+                </Text>
+              )}
               <Text style={[styles.text, { fontSize: 14, marginTop: 10 }]}>
                 {data?.specialization}
               </Text>
@@ -220,6 +303,18 @@ const DoctorProfile = () => {
                   }
                   placeholder={"Patient Name"}
                 />
+                <CustomTextInput
+                  value={state.patientNotes}
+                  onChangeText={(i) =>
+                    setState((prev) => ({
+                      ...prev,
+                      patientNotes: i,
+                    }))
+                  }
+                  placeholder={"Additional Notes"}
+                  multiline={true}
+                  numberOfLines={4}
+                />
 
                 <View style={styles.check}>
                   <CustomCheckbox
@@ -234,13 +329,21 @@ const DoctorProfile = () => {
                   />
                 </View>
 
-                <CustomButton title={'Book Video Consultation'} buttonStyle={{marginTop: 15, backgroundColor:'#4ca585' }}/>
+                <CustomButton
+                  title={"Book Video Consultation"}
+                  buttonStyle={{ marginTop: 15, backgroundColor: "#4ca585" }}
+                  onPress={handleBookAppointment}
+                />
               </View>
             </View>
-            <ReviewSection data={data?.reviewData} count={data?.reviews}/>
-          </View>
+            <DoctorStats data={data?.doctorStats} count={data?.reviews} />
 
-          
+            {data?.patientReviews.map((rev, index) => (
+              <View key={index}>
+                <ReviewCard review={rev} />
+              </View>
+            ))}
+          </View>
         )}
       />
 

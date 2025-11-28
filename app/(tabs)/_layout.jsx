@@ -3,7 +3,7 @@ import { Tabs } from 'expo-router';
 import { HapticTab } from '@/components/haptic-tab';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Hospital } from 'lucide-react-native';
+import { Hospital, Notebook } from 'lucide-react-native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -20,6 +20,13 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <Hospital size={28} color={color}  />,
+        }}
+      />
+      <Tabs.Screen
+        name="appointments"
+        options={{
+          title: 'Appointments',
+          tabBarIcon: ({ color }) => <Notebook size={28} color={color}  />,
         }}
       />
     </Tabs>

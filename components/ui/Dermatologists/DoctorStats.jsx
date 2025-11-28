@@ -1,15 +1,13 @@
 import { Star } from "lucide-react-native";
 import { StyleSheet, Text, View } from "react-native";
 
-const ReviewSection = ({ data, count }) => {
+const DoctorStats = ({ data, count }) => {
   const getWidth = (value) => `${(value / 5) * 100}%`;
 
   return (
     <View style={styles.container}>
-      {/* Header */}
       <Text style={styles.heading}>{count} Reviews</Text>
 
-      {/* Stars */}
       <View style={styles.starRow}>
         {Array(5)
           .fill(0)
@@ -18,7 +16,6 @@ const ReviewSection = ({ data, count }) => {
           ))}
       </View>
 
-      {/* Average Rating Box */}
       <View style={styles.averageBox}>
         <Text style={styles.averageScore}>5/5</Text>
         <Text style={styles.averageText}>
@@ -26,7 +23,6 @@ const ReviewSection = ({ data, count }) => {
         </Text>
       </View>
 
-      {/* Wait Time Boxes */}
       <View style={styles.timeRow}>
         <View style={styles.timeBox}>
           <Text style={styles.timeHeading}>Wait Time</Text>
@@ -43,7 +39,6 @@ const ReviewSection = ({ data, count }) => {
         </View>
       </View>
 
-      {/* Patient Satisfaction */}
       <View style={styles.ratingRow}>
         <Text style={styles.ratingLabel}>Patient Satisfaction</Text>
         <View style={styles.barContainer}>
@@ -57,7 +52,6 @@ const ReviewSection = ({ data, count }) => {
         <Text style={styles.ratingValue}>{data?.patientSatisfaction}/5</Text>
       </View>
 
-      {/* Diagnosis */}
       <View style={styles.ratingRow}>
         <Text style={styles.ratingLabel}>Diagnosis</Text>
         <View style={styles.barContainer}>
@@ -68,7 +62,6 @@ const ReviewSection = ({ data, count }) => {
         <Text style={styles.ratingValue}>{data?.diagnosis}/5</Text>
       </View>
 
-      {/* Staff Behaviour */}
       <View style={styles.ratingRow}>
         <Text style={styles.ratingLabel}>Staff Behaviour</Text>
         <View style={styles.barContainer}>
@@ -79,7 +72,6 @@ const ReviewSection = ({ data, count }) => {
         <Text style={styles.ratingValue}>{data?.staffBehaviour}/5</Text>
       </View>
 
-      {/* Clinic Environment */}
       <View style={styles.ratingRow}>
         <Text style={styles.ratingLabel}>Clinic Environment</Text>
         <View style={styles.barContainer}>
@@ -93,7 +85,7 @@ const ReviewSection = ({ data, count }) => {
   );
 };
 
-export default ReviewSection;
+export default DoctorStats;
 
 const styles = StyleSheet.create({
   container: {

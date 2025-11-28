@@ -48,3 +48,33 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## Implementation
+ Screens Created
+ - Dermatologists
+ - Profile
+ - Ai Chat
+ - Booked Appointments
+
+ Used Libraries
+ - react-native-toast-message
+ - lucide-react-native
+ - react-native-picker/picker
+ - reduxjs/toolkit
+
+ Can perform
+ - Book appointments from the Derma screen using the quick appointments BookAppointmentModal COmponent
+ - View the doctor profile from the common object created in common.js
+ - Book appointment from profile 
+ - view booked appointments being shown on Appointments screen
+ - cancel appointments from the appointments screen
+ - can chat use the chat interface with one simulated response
+ - toasts messages being displayed on each booking or cancellation
+
+ Expected
+ - Works on both android and iOS
+ - Failed to implement the tailwind, setup problems, fallback to traditional styling
+ - used expo-router for navigation between screen and back
+ - provided ease of use for user to navigate easily back to the original screen
+
+ 

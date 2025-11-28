@@ -10,11 +10,14 @@ const AppointmentCard = ({ data, onPress = () => {}, selected = false }) => {
     >
       <View style={styles.row}>
         <Text style={styles.title}>{data?.type}</Text>
-        <Label
-          title={"Fast Confirm"}
-          icon={<Zap fill={"#04521b"} size={12} color={"#04521b"} />}
-          bgColor={"#d4f5e1"}
-        />
+        {data?.fastConfirm ? (
+          <Label
+            title={"Fast Confirm"}
+            icon={<Zap fill={"#04521b"} size={12} color={"#04521b"} />}
+            bgColor={"#d4f5e1"}
+          />
+        ): <View style={{width: 100}}/>
+      }
       </View>
 
       <View style={{ ...styles.row, marginTop: 10 }}>
@@ -36,7 +39,7 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     borderRadius: 10,
     marginRight: 10,
-    flex: 1
+    flex: 1,
   },
   selected: {
     borderColor: "#4ca585",
@@ -50,5 +53,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
+    gap: 10,
   },
 });

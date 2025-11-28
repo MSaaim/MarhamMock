@@ -7,8 +7,9 @@ export const homeData = [
     degree: "MBBS, Diploma in Dermatology",
     reviews: 130,
     experience: 2,
+    isOnline: true,
     satisfaction: 99,
-    phoneNo: "0300-1234567",
+    phoneNo: "03051127342",
     tags: ["PRP", "Acne", "Hair Loss"],
     profileImage: require("../assets/images/doc1.jpg"),
     canVideoCall: true,
@@ -16,7 +17,7 @@ export const homeData = [
       {
         type: "Video Consultation",
         price: 1000,
-        fastConfirm: true,
+        fastConfirm: false,
         availableNow: true,
       },
       {
@@ -27,7 +28,7 @@ export const homeData = [
         fromDate: "Nov 28",
       },
     ],
-    reviewData: {
+    doctorStats: {
       waitTime: 10,
       averageTimeToPatient: 15,
       patientSatisfaction: 4.7,
@@ -35,6 +36,40 @@ export const homeData = [
       staffBehaviour: 4.9,
       clinicEnv: 4.6,
     },
+    patientReviews: [
+      {
+        id: 1,
+        userInitial: "N",
+        date: "15/07/2023",
+        title: "I am satisfied with the doctor.",
+        description:
+          "Very well and understanding doctor. He gave satisfactory consultation. Hopefully medicine will affect too. Overall. Very well experience.",
+        tags: [
+          "10 min wait time",
+          "Great Experience",
+          "Good PA / Staff",
+          "Good Clinic",
+          "20 min meetup",
+        ],
+      },
+      {
+        id: 2,
+        userInitial: "A",
+        date: "02/09/2023",
+        title: "Helped me with acne",
+        description:
+          "Great diagnosis. Acne reduced a lot after following his routine. Very polite and knowledgeable.",
+        tags: ["Minimal wait", "Acne Treatment", "Polite Doctor"],
+      },
+      {
+        id: 3,
+        userInitial: "S",
+        date: "10/10/2023",
+        title: "PRP session went well",
+        description: "Professional and explained every PRP step. Recommended!",
+        tags: ["PRP Treatment", "Hygienic Clinic", "Friendly Staff"],
+      },
+    ],
   },
 
   {
@@ -45,6 +80,7 @@ export const homeData = [
     degree: "MS Clinical Psychology",
     reviews: 98,
     experience: 4,
+    isOnline: false, 
     phoneNo: "0300-1234567",
     satisfaction: 96,
     tags: ["Anxiety", "Depression", "Therapy"],
@@ -65,7 +101,7 @@ export const homeData = [
         fromDate: "Nov 30",
       },
     ],
-    reviewData: {
+    doctorStats: {
       waitTime: 6,
       averageTimeToPatient: 12,
       patientSatisfaction: 4.9,
@@ -73,11 +109,32 @@ export const homeData = [
       staffBehaviour: 5,
       clinicEnv: 4.8,
     },
+    patientReviews: [
+      {
+        id: 1,
+        userInitial: "M",
+        date: "12/08/2023",
+        title: "Very comforting doctor",
+        description:
+          "She listens patiently and gives actionable advice. Really helped with my anxiety.",
+        tags: ["Short wait time", "Calm Environment", "Therapy"],
+      },
+      {
+        id: 2,
+        userInitial: "R",
+        date: "22/09/2023",
+        title: "Amazing session",
+        description:
+          "Felt very relaxed after the session. She made me understand the root cause of my depression.",
+        tags: ["Good Listener", "Friendly", "Productive Session"],
+      },
+    ],
   },
 
   {
     id: "3",
     name: "Dr. Zain Ahmad",
+    isOnline: true,
     verified: true,
     specialization: "Cardiologist",
     degree: "MBBS, FCPS (Cardiology)",
@@ -96,7 +153,7 @@ export const homeData = [
         availableNow: true,
       },
     ],
-    reviewData: {
+    doctorStats: {
       waitTime: 12,
       averageTimeToPatient: 18,
       patientSatisfaction: 4.5,
@@ -104,12 +161,33 @@ export const homeData = [
       staffBehaviour: 4.4,
       clinicEnv: 4.7,
     },
+    patientReviews: [
+      {
+        id: 1,
+        userInitial: "H",
+        date: "04/10/2023",
+        title: "Very expert doctor",
+        description:
+          "Doctor guided me very professionally regarding chest pain and ECG results.",
+        tags: ["ECG", "Quick Checkup", "Expert"],
+      },
+      {
+        id: 2,
+        userInitial: "T",
+        date: "18/10/2023",
+        title: "Explained everything clearly",
+        description:
+          "He explained my heart condition in a very simple way. Highly satisfied.",
+        tags: ["Clear Explanation", "No rush", "Good Clinic"],
+      },
+    ],
   },
 
   {
     id: "4",
     name: "Dr. Maira Khan",
-    verified: true,
+    verified: false,
+    isOnline: false,
     specialization: "Gynecologist",
     degree: "MBBS, FCPS (Gynecology)",
     reviews: 185,
@@ -135,7 +213,7 @@ export const homeData = [
         fromDate: "Dec 2",
       },
     ],
-    reviewData: {
+    doctorStats: {
       waitTime: 9,
       averageTimeToPatient: 10,
       patientSatisfaction: 4.8,
@@ -143,6 +221,26 @@ export const homeData = [
       staffBehaviour: 4.9,
       clinicEnv: 4.6,
     },
+    patientReviews: [
+      {
+        id: 1,
+        userInitial: "J",
+        date: "05/09/2023",
+        title: "Very kind and humble",
+        description:
+          "I visited for pregnancy consultation. She was extremely helpful and guided me properly.",
+        tags: ["Pregnancy", "Detailed Checkup", "Friendly Staff"],
+      },
+      {
+        id: 2,
+        userInitial: "A",
+        date: "27/09/2023",
+        title: "Good experience",
+        description:
+          "Ultrasound was done smoothly and doctor explained everything calmly.",
+        tags: ["Ultrasound", "No long wait", "Clean Clinic"],
+      },
+    ],
   },
 
   {
@@ -166,7 +264,7 @@ export const homeData = [
         availableNow: true,
       },
     ],
-    reviewData: {
+    doctorStats: {
       waitTime: 14,
       averageTimeToPatient: 20,
       patientSatisfaction: 4.3,
@@ -174,6 +272,26 @@ export const homeData = [
       staffBehaviour: 4.2,
       clinicEnv: 4.1,
     },
+    patientReviews: [
+      {
+        id: 1,
+        userInitial: "W",
+        date: "13/07/2023",
+        title: "Great for back pain",
+        description:
+          "My back pain improved significantly after following his exercise plan.",
+        tags: ["Back Pain Relief", "Good Exercise Plan", "Quick Checkup"],
+      },
+      {
+        id: 2,
+        userInitial: "B",
+        date: "08/09/2023",
+        title: "Very knowledgeable",
+        description:
+          "He explained my joint issue very clearly. Highly recommended.",
+        tags: ["Joint Pain", "Polite Doctor", "Professional"],
+      },
+    ],
   },
 
   {
@@ -204,7 +322,7 @@ export const homeData = [
         fromDate: "Dec 1",
       },
     ],
-    reviewData: {
+    doctorStats: {
       waitTime: 5,
       averageTimeToPatient: 9,
       patientSatisfaction: 4.6,
@@ -212,5 +330,25 @@ export const homeData = [
       staffBehaviour: 1,
       clinicEnv: 4.8,
     },
+    patientReviews: [
+      {
+        id: 1,
+        userInitial: "F",
+        date: "20/07/2023",
+        title: "Perfect diet plan",
+        description:
+          "She made a customized diet plan according to my schedule. Lost 3kg in a month!",
+        tags: ["Weight Loss", "Custom Diet", "Easy to Follow"],
+      },
+      {
+        id: 2,
+        userInitial: "K",
+        date: "11/09/2023",
+        title: "Very helpful",
+        description:
+          "I loved her meal prep strategy. Helped me stay consistent.",
+        tags: ["Meal Prep", "Motivating Doctor", "Great Experience"],
+      },
+    ],
   },
 ];

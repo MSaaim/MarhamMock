@@ -1,3 +1,4 @@
+import { addAppointment } from "@/store/appointmentsSlice";
 import { X } from "lucide-react-native";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -10,6 +11,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import Toast from "react-native-toast-message";
+import { useDispatch } from "react-redux";
+import CustomCheckbox from "../CustomCheckBox";
 
 const DURATION = 200;
 
@@ -18,20 +22,24 @@ const AppointmentModal = ({
   onClose = () => {},
   appointment = null,
 }) => {
-  const [show, setShow] = useState(visible);
-
-  // Common unified form state
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    notes: "",
+  const [state, setState] = useState({
+    visible: visible,
+    form: {
+      name: "",
+      phone: "",
+      notes: "",
+      amOutside: false,
+    },
+    errors: {},
   });
+
+  const dispatch = useDispatch();
 
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (visible) {
-      setShow(true);
+      setState((s) => ({ ...s, visible: true }));
       Animated.timing(opacity, {
         toValue: 1,
         duration: DURATION,
@@ -42,11 +50,52 @@ const AppointmentModal = ({
         toValue: 0,
         duration: DURATION,
         useNativeDriver: true,
-      }).start(() => setShow(false));
+      }).start(() => setState((s) => ({ ...s, visible: false })));
     }
   }, [visible]);
 
-  if (!show) return null;
+  const handleConfirm = () => {
+    const e = {};
+    if (!state.form.name || !state.form.name.trim())
+      e.name = "Name is required";
+    if (!state.form.phone || !state.form.phone.trim())
+      e.phone = "Phone is required";
+    setState((s) => ({ ...s, errors: e }));
+    if (Object.keys(e).length) {
+      const messages = Object.values(e).join(". ");
+      Toast.show({ type: "error", text1: "Validation error", text2: messages });
+      return;
+    }
+
+    const booking = {
+      ...appointment,
+      bookedAt: new Date().toISOString(),
+      details: { ...state.form },
+    };
+
+    try {
+      dispatch(addAppointment(booking));
+      Toast.show({
+        type: "success",
+        text1: "Booked",
+        text2: "Appointment booked successfully",
+      });
+      setState((s) => ({
+        ...s,
+        form: { name: "", phone: "", notes: "" },
+        errors: {},
+      }));
+      onClose();
+    } catch (err) {
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Could not book appointment",
+      });
+    }
+  };
+
+  if (!state.visible) return null;
 
   // Format the date
   const formattedDate = (() => {
@@ -62,14 +111,18 @@ const AppointmentModal = ({
   })();
 
   return (
-    <Modal visible={show} transparent statusBarTranslucent onRequestClose={onClose}>
+    <Modal
+      visible={state.visible}
+      transparent
+      statusBarTranslucent
+      onRequestClose={onClose}
+    >
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.backdrop} />
       </TouchableWithoutFeedback>
 
       <View style={styles.centered} pointerEvents="box-none">
         <Animated.View style={[styles.modal, { opacity }]}>
-
           {/* HEADER */}
           <View style={styles.header}>
             <Text style={{ ...styles.title, color: "#000" }}>
@@ -96,34 +149,60 @@ const AppointmentModal = ({
               placeholder="Full Name"
               style={styles.input}
               placeholderTextColor="#777"
-              value={form.name}
-              onChangeText={(v) => setForm({ ...form, name: v })}
+              value={state.form.name}
+              onChangeText={(v) =>
+                setState((s) => ({ ...s, form: { ...s.form, name: v } }))
+              }
             />
+            {state.errors.name ? (
+              <Text style={{ color: "red", marginBottom: 8 }}>
+                {state.errors.name}
+              </Text>
+            ) : null}
 
             <TextInput
-              placeholder="Phone Number"
+              placeholder="Phone Numbernnb"
               style={styles.input}
               keyboardType="phone-pad"
               placeholderTextColor="#777"
-              value={form.phone}
-              onChangeText={(v) => setForm({ ...form, phone: v })}
+              value={state.form.phone}
+              onChangeText={(v) =>
+                setState((s) => ({ ...s, form: { ...s.form, phone: v } }))
+              }
             />
+            {state.errors.phone ? (
+              <Text style={{ color: "red", marginBottom: 8 }}>
+                {state.errors.phone}
+              </Text>
+            ) : null}
 
             <TextInput
               placeholder="Additional Notes"
               style={[styles.input, { height: 90 }]}
               placeholderTextColor="#777"
-              value={form.notes}
-              onChangeText={(v) => setForm({ ...form, notes: v })}
+              value={state.form.notes}
+              onChangeText={(v) =>
+                setState((prev) => ({ ...prev, form: { ...prev.form, notes: v } }))
+              }
               multiline
               textAlignVertical="top"
             />
 
-            <TouchableOpacity style={styles.bookBtn}>
+            <CustomCheckbox
+              checked={state.form.amOutside}
+              onChange={() =>
+                setState((prev) => ({
+                  ...prev,
+                  form: { ...prev.form, amOutside: !prev.form.amOutside },
+                }))
+              }
+              label="Booking from outside Lahore?"
+            />
+
+            <TouchableOpacity style={styles.bookBtn} onPress={handleConfirm}>
               <Text style={styles.bookBtnText}>Confirm Booking</Text>
             </TouchableOpacity>
           </View>
-
         </Animated.View>
       </View>
     </Modal>

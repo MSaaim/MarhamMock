@@ -1,7 +1,9 @@
+import { StoreProvider } from '@/store/store';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
+import Toast from 'react-native-toast-message';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
@@ -13,14 +15,17 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-       <Stack
-            screenOptions={{
-              headerShown: false, // hide default header
-              contentStyle: { backgroundColor: "white" }, // force white background
-            }}
-          />
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <StoreProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+         <Stack
+              screenOptions={{
+                headerShown: false, 
+                contentStyle: { backgroundColor: "white" }, 
+              }}
+            />
+        <StatusBar style="auto" />
+        <Toast />
+      </ThemeProvider>
+    </StoreProvider>
   );
 }

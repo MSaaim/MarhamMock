@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import CustomButton from "../CustomButton";
@@ -45,8 +46,9 @@ const SymptomChecker = () => {
       />
       <CustomButton
         title="Enter Symptoms"
-        onPress={() => {}}
+        onPress={() => {router.push({pathname: '/SymptomChat', params:{query: state.symptomQuery}})}}
         buttonStyle={ state?.symptomQuery ? styles.button: styles.disabledButton}
+        disabled={!state?.symptomQuery}
       />
       <Text style={styles.subText}>Your information is private and secure</Text>
     </View>
