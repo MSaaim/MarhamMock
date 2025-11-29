@@ -1,11 +1,12 @@
 import { router } from "expo-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomHeader from "../../components/ui/CustomHeader";
 import AppointmentModal from "../../components/ui/Dermatologists/AppointmentModal";
 import HomeCard from "../../components/ui/Dermatologists/HomeCard";
 import SymptomChecker from "../../components/ui/Dermatologists/SymptomChecker";
+import SearchBar from "../../components/ui/SearchBar";
 import { homeData } from "../../constants/common.js";
 
 const index = () => {
@@ -13,15 +14,26 @@ const index = () => {
     appointmentPopupVisible: false,
     selectedAppointment: null,
   });
+  const [search, setSearch] = useState('')
+
+  const filtered = useMemo(() => {
+    const q = (search || '').trim().toLowerCase()
+    if (!q) return homeData
+    return homeData.filter(d => {
+      return (
+        (d.name || '').toLowerCase().includes(q) ||
+        (d.specialization || '').toLowerCase().includes(q)
+      )
+    })
+  }, [search])
 
   return (
     <SafeAreaView>
       <CustomHeader
         title="Dermatologists"
         showBack={false}
-        // rightButtonIcon={<Hospital size={20} color="#000" />}
-        // rightButtonPress={() => console.log('Right button pressed')}
       />
+      <SearchBar value={search} onChange={setSearch} />
       <FlatList
         data={[{ id: "1" }]}
         keyExtractor={(item) => item.id}
@@ -30,7 +42,7 @@ const index = () => {
             <SymptomChecker />
 
             <View>
-              {homeData.map((doctor) => (
+              {filtered.map((doctor) => (
                 <View style={{ marginTop: 10 }} key={doctor.id}>
                   <HomeCard
                     key={doctor.id}
